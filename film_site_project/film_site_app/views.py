@@ -11,6 +11,9 @@ class HomeView(ListView):
     template_name = "home.html"
     context_object_name = "films"
 
+    def get_queryset(self):
+        return Film.objects.order_by('?')[:10]
+
 
 class FilmListView(ListView):
     model = Film
