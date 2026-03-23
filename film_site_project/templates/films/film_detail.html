@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ film.title }}</title>
+</head>
+<body>
+    <h1>{{ film.title }}</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Головна</a> |
+        <a href="{% url 'film_list' %}">Усі фільми</a> |
+        <a href="{% url 'actor_list' %}">Актори</a> |
+        <a href="{% url 'profile' %}">Профіль</a>
+    </nav>
+
+    <hr>
+
+    <p><strong>Жанр:</strong> {{ film.genre }}</p>
+    <p><strong>Дата виробництва:</strong> {{ film.production_date }}</p>
+
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'like_film' film.id %}">
+            {% csrf_token %}
+            <button type="submit">
+                {% if film in user.liked_films.all %}
+                    Прибрати з улюблених
+                {% else %}
+                    Додати в улюблені
+                {% endif %}
+            </button>
+        </form>
+    {% endif %}
+
+    <h2>Актори і ролі</h2>
+    {% for role in roles %}
+        <p>
+            <a href="{% url 'actor_detail' role.actor.id %}">{{ role.actor.name }}</a>
+            — {{ role.role_name }}
+        </p>
+    {% empty %}
+        <p>Інформації про ролі немає.</p>
+    {% endfor %}
+</body>
+</html>

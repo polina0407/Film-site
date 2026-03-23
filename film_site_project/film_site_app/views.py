@@ -8,7 +8,7 @@ from .models import Film, Actor, Genre, Role
 
 class HomeView(ListView):
     model = Film
-    template_name = "home.html"
+    template_name = "films/home.html"
     context_object_name = "films"
 
     def get_queryset(self):
@@ -71,8 +71,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         user = self.request.user
 
         context["profile"] = user
-        context["liked_films"] = user.liked_films.all()
-
+        context["liked_films"] = user.liked_film.all()
+        # todo: шо з liked_film чи liked_filmс
         return context
 
 
