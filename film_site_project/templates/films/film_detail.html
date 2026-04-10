@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ film.title }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}{{ film.title }}{% endblock %}
+
+{% block content %}
     <h1>{{ film.title }}</h1>
-
-    <nav>
-        <a href="{% url 'home' %}">Головна</a> |
-        <a href="{% url 'film_list' %}">Усі фільми</a> |
-        <a href="{% url 'actor_list' %}">Актори</a> |
-        <a href="{% url 'profile' %}">Профіль</a>
-    </nav>
-
-    <hr>
 
     <p><strong>Жанр:</strong> {{ film.genre }}</p>
     <p><strong>Дата виробництва:</strong> {{ film.production_date }}</p>
@@ -41,5 +30,4 @@
     {% empty %}
         <p>Інформації про ролі немає.</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
