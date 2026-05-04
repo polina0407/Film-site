@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block content %}
+    <h1>Профіль користувача</h1>
+
+    <p><strong>Ім’я користувача:</strong> {{ profile.username }}</p>
+    <p><strong>Email:</strong> {{ profile.email }}</p>
+
+    <h2>Улюблені фільми</h2>
+    {% for film in liked_films %}
+        <p>
+            <a href="{% url 'film_detail' film.id %}">{{ film.title }}</a>
+        </p>
+    {% empty %}
+        <p>Улюблених фільмів поки немає.</p>
+    {% endfor %}
+{% endblock %}

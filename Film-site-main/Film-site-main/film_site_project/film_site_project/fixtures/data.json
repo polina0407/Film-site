@@ -1,0 +1,222 @@
+[
+    {
+        "model": "film_site_app.genre",
+        "pk": 1,
+        "fields": {
+            "genre": "Комедія"
+        }
+    },
+    {
+        "model": "film_site_app.genre",
+        "pk": 2,
+        "fields": {
+            "genre": "Драма"
+        }
+    },
+    {
+        "model": "film_site_app.genre",
+        "pk": 3,
+        "fields": {
+            "genre": "Фантастика"
+        }
+    },
+    {
+        "model": "film_site_app.genre",
+        "pk": 4,
+        "fields": {
+            "genre": "Бойовик"
+        }
+    },
+
+    {
+        "model": "film_site_app.film",
+        "pk": 1,
+        "fields": {
+            "title": "Інтерстеллар",
+            "production_date": "2014-11-07",
+            "genre": 3,
+            "country": "США",
+            "trailer_url": "https://www.youtube.com/watch?v=zSWdZVtXT7E"
+        }
+    },
+    {
+        "model": "film_site_app.film",
+        "pk": 2,
+        "fields": {
+            "title": "1+1",
+            "production_date": "2011-11-02",
+            "genre": 1,
+            "country": "Франція",
+            "trailer_url": "https://www.youtube.com/watch?v=34WIbmXkewU"
+        }
+    },
+    {
+        "model": "film_site_app.film",
+        "pk": 3,
+        "fields": {
+            "title": "Гладіатор",
+            "production_date": "2000-05-05",
+            "genre": 4,
+            "country": "США",
+            "trailer_url": "https://www.youtube.com/watch?v=owK1qxDselE"
+        }
+    },
+    {
+        "model": "film_site_app.film",
+        "pk": 4,
+        "fields": {
+            "title": "Зелена миля",
+            "production_date": "1999-12-10",
+            "genre": 2,
+            "country": "США",
+            "trailer_url": "https://www.youtube.com/watch?v=Ki4haFrqSrw"
+        }
+    },
+
+    {
+        "model": "film_site_app.actor",
+        "pk": 1,
+        "fields": {
+            "name": "Меттью",
+            "last_name": "Макконагі",
+            "gender": "male",
+            "country": "США",
+            "photo": "actor_photos/matthew_mcconaughey.jpg"
+        }
+    },
+    {
+        "model": "film_site_app.actor",
+        "pk": 2,
+        "fields": {
+            "name": "Омар",
+            "last_name": "Сі",
+            "gender": "male",
+            "country": "Франція",
+            "photo": "actor_photos/omar_sy.jpg"
+        }
+    },
+    {
+        "model": "film_site_app.actor",
+        "pk": 3,
+        "fields": {
+            "name": "Рассел",
+            "last_name": "Кроу",
+            "gender": "male",
+            "country": "Нова Зеландія",
+            "photo": "actor_photos/russell_crowe.jpg"
+        }
+    },
+    {
+        "model": "film_site_app.actor",
+        "pk": 4,
+        "fields": {
+            "name": "Том",
+            "last_name": "Хенкс",
+            "gender": "male",
+            "country": "США",
+            "photo": "actor_photos/tom_hanks.jpg"
+        }
+    },
+    {
+        "model": "film_site_app.actor",
+        "pk": 5,
+        "fields": {
+            "name": "Енн",
+            "last_name": "Гетевей",
+            "gender": "female",
+            "country": "США",
+            "photo": "actor_photos/anne_hathaway.jpg"
+        }
+    },
+
+    {
+        "model": "film_site_app.role",
+        "pk": 1,
+        "fields": {
+            "title": "Купер",
+            "film": 1,
+            "actor": 1
+        }
+    },
+    {
+        "model": "film_site_app.role",
+        "pk": 2,
+        "fields": {
+            "title": "Доктор Бренд",
+            "film": 1,
+            "actor": 5
+        }
+    },
+    {
+        "model": "film_site_app.role",
+        "pk": 3,
+        "fields": {
+            "title": "Дрісс",
+            "film": 2,
+            "actor": 2
+        }
+    },
+    {
+        "model": "film_site_app.role",
+        "pk": 4,
+        "fields": {
+            "title": "Максимус",
+            "film": 3,
+            "actor": 3
+        }
+    },
+    {
+        "model": "film_site_app.role",
+        "pk": 5,
+        "fields": {
+            "title": "Пол Еджкомб",
+            "film": 4,
+            "actor": 4
+        }
+    },
+
+    {
+        "model": "film_site_app.profile",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$examplehash$examplehashvalue123456789",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "user1",
+            "first_name": "Іван",
+            "last_name": "Петренко",
+            "email": "ivan@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-03-23T10:00:00Z",
+            "gender": "male",
+            "avatar": "pofile_avatars/user1.jpg",
+            "liked_film": [1, 2],
+            "phone": "+380991112233",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "film_site_app.profile",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$examplehash$examplehashvalue987654321",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "user2",
+            "first_name": "Олена",
+            "last_name": "Коваль",
+            "email": "olena@example.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2026-03-23T11:00:00Z",
+            "gender": "female",
+            "avatar": "pofile_avatars/user2.jpg",
+            "liked_film": [3, 4],
+            "phone": "+380992223344",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

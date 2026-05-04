@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Polinima{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Мій кіносайт</h1>
+
+        <nav>
+            <a href="{% url 'home' %}">Головна</a> |
+            <a href="{% url 'film_list' %}">Усі фільми</a> |
+            <a href="{% url 'actor_list' %}">Актори</a> |
+            <a href="{% url 'profile' %}">Профіль</a>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        {% block content %}
+        <!-- Контент сторінки -->
+        {% endblock %}
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>© 2026 Мій сайт</p>
+    </footer>
+</body>
+</html>

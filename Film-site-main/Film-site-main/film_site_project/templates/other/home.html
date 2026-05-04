@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+    <h1>Випадкові 10 фільмів</h1>
+
+    {% for film in films %}
+        <div>
+            <h2>{{ film.title }}</h2>
+            <p>Жанр: {{ film.genre }}</p>
+            <p>Дата виробництва: {{ film.production_date }}</p>
+            <a href="{% url 'film_detail' film.id %}">Детальніше</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Фільмів немає.</p>
+    {% endfor %}
+{% endblock %}

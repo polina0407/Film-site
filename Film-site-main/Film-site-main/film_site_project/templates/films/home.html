@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Головна</title>
+</head>
+<body>
+    <h1>Випадкові 10 фільмів</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Головна</a> |
+        <a href="{% url 'film_list' %}">Усі фільми</a> |
+        <a href="{% url 'actor_list' %}">Актори</a> |
+        <a href="{% url 'profile' %}">Профіль</a>
+    </nav>
+
+    <hr>
+
+    {% for film in films %}
+        <div>
+            <h2>{{ film.title }}</h2>
+            <p>Жанр: {{ film.genre }}</p>
+            <p>Дата виробництва: {{ film.production_date }}</p>
+            <a href="{% url 'film_detail' film.id %}">Детальніше</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Фільмів немає.</p>
+    {% endfor %}
+</body>
+</html>

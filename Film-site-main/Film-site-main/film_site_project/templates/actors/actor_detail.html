@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ actor.name }}</title>
+</head>
+<body>
+    <h1>{{ actor.name }}</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Головна</a> |
+        <a href="{% url 'film_list' %}">Фільми</a> |
+        <a href="{% url 'actor_list' %}">Актори</a> |
+        <a href="{% url 'profile' %}">Профіль</a>
+    </nav>
+
+    <hr>
+
+    <h2>Фільми та ролі</h2>
+    {% for role in roles %}
+        <p>
+            <a href="{% url 'film_detail' role.film.id %}">{{ role.film.title }}</a>
+            — {{ role.role_name }}
+        </p>
+    {% empty %}
+        <p>Інформації про ролі немає.</p>
+    {% endfor %}
+</body>
+</html>

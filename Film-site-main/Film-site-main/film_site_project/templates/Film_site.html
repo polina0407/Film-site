@@ -1,0 +1,78 @@
+[
+  {
+    "model": "film_site_app.genre",
+    "pk": 1,
+    "fields": {
+      "genre": "Action"
+    }
+  },
+  {
+    "model": "film_site_app.genre",
+    "pk": 2,
+    "fields": {
+      "genre": "Comedy"
+    }
+  },
+  {
+    "model": "film_site_app.film",
+    "pk": 1,
+    "fields": {
+      "title": "Matrix",
+      "production_date": "1999-03-31",
+      "genre": 1,
+      "country": "USA",
+      "trailer_url": "https://www.youtube.com/watch?v=vKQi3bBA1y8"
+    }
+  },
+  {
+    "model": "film_site_app.film",
+    "pk": 2,
+    "fields": {
+      "title": "Home Alone",
+      "production_date": "1990-11-16",
+      "genre": 2,
+      "country": "USA",
+      "trailer_url": "https://www.youtube.com/watch?v=jEDaVHmw7r4"
+    }
+  },
+  {
+    "model": "film_site_app.actor",
+    "pk": 1,
+    "fields": {
+      "name": "Keanu",
+      "last_name": "Reeves",
+      "gender": "male",
+      "country": "Canada",
+      "photo": "actor_photos/keanu.jpg"
+    }
+  },
+  {
+    "model": "film_site_app.actor",
+    "pk": 2,
+    "fields": {
+      "name": "Macaulay",
+      "last_name": "Culkin",
+      "gender": "male",
+      "country": "USA",
+      "photo": "actor_photos/culkin.jpg"
+    }
+  },
+  {
+    "model": "film_site_app.role",
+    "pk": 1,
+    "fields": {
+      "title": "Neo",
+      "film": 1,
+      "actor": 1
+    }
+  },
+  {
+    "model": "film_site_app.role",
+    "pk": 2,
+    "fields": {
+      "title": "Kevin McCallister",
+      "film": 2,
+      "actor": 2
+    }
+  }
+]

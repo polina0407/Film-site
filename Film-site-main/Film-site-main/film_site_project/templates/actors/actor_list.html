@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Список акторів</title>
+</head>
+<body>
+    <h1>Актори</h1>
+
+    <nav>
+        <a href="{% url 'home' %}">Головна</a> |
+        <a href="{% url 'film_list' %}">Фільми</a> |
+        <a href="{% url 'profile' %}">Профіль</a>
+    </nav>
+
+    <hr>
+
+    {% for actor in actors %}
+        <div>
+            <h2>{{ actor.name }}</h2>
+            <a href="{% url 'actor_detail' actor.id %}">Детальніше</a>
+        </div>
+        <hr>
+    {% empty %}
+        <p>Акторів немає.</p>
+    {% endfor %}
+</body>
+</html>
