@@ -155,7 +155,7 @@ class RegisterView(CreateView):
         user = form.save()  # Створюємо користувача
 
         # Створюємо порожній профіль для цього користувача
-        Profile.objects.create(user=user)
+        #Profile.objects.create(user=user)
 
         login(self.request, user)
         # Краще редиректити на home або profile, бо користувач вже залогінився
