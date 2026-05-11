@@ -11,9 +11,12 @@ urlpatterns = [
     path("actors/<int:id>/", ActorDetailView.as_view(), name="actor_detail"),
 
     path("profile/", ProfileView.as_view(), name="profile"),
+    path("profile/edit/", ProfileEditView.as_view(), name="edit_profile"),
 
     path("films/<int:id>/like/", LikeFilmView.as_view(), name="like_film"),
     path("login/", CustomLoginView.as_view(), name="login"),
     path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 ]
+
+app_name = "film_site_app"

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -18,6 +18,7 @@ class Film(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, related_name="films")
     country = models.CharField(max_length=255)
     trailer_url = models.URLField(blank=True)
+    poster = models.ImageField(upload_to="film_posters/", null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -50,9 +51,13 @@ class Role(models.Model):
         return f"{self.actor} - {self.title} ({self.film})"
 
 
-class Profile(AbstractUser):
+class Profile(models.Model):
 
-    ROLES = [('admin', 'Адміністратор'), ('client', 'Клієнт')]
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
 
     gender_choices = [("male", "Чоловік"), ("female", "Жінка"), ("no info", "Не бажаю вказувати ")]
 
@@ -62,4 +67,4 @@ class Profile(AbstractUser):
     phone = models.CharField(max_length=20, blank=True)
 
     def __str__(self):
-        return self.username
+        return self.user.username

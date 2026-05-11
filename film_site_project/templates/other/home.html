@@ -10,7 +10,7 @@
             <h2>{{ film.title }}</h2>
             <p>Жанр: {{ film.genre }}</p>
             <p>Дата виробництва: {{ film.production_date }}</p>
-            <a href="{% url 'film_detail' film.id %}">Детальніше</a>
+            <a href="{% url 'film_site_app:film_detail' film.id %}">Детальніше</a>
         </div>
         <hr>
     {% empty %}

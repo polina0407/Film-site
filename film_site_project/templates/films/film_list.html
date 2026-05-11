@@ -3,17 +3,44 @@
 {% block title %}Список фільмів{% endblock %}
 
 {% block content %}
-    <h1>Усі фільми</h1>
+    <h1 class="mb-4">Усі фільми</h1>
 
-    {% for film in films %}
-        <div>
-            <h2>{{ film.title }}</h2>
-            <p>Жанр: {{ film.genre }}</p>
-            <p>Дата виробництва: {{ film.production_date }}</p>
-            <a href="{% url 'film_detail' film.id %}">Детальніше</a>
-        </div>
-        <hr>
-    {% empty %}
-        <p>Фільмів немає.</p>
-    {% endfor %}
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for film in films %}
+            <div class="col">
+                <div class="card h-100 shadow-sm film-card">
+                    <div class="position-relative">
+                        {% if film.poster %}
+                            <img src="{{ film.poster.url }}" class="card-img-top" alt="{{ film.title }}" style="height: 350px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 350px;">
+                                <span class="text-muted">Постер відсутній</span>
+                            </div>
+                        {% endif %}
+
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2">
+                            {{ film.genre }}
+                        </span>
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-truncate">{{ film.title }}</h5>
+                        <p class="card-text text-muted small mb-3">
+                            <i class="bi bi-calendar-event"></i> {{ film.production_date|date:"Y" }} рік
+                        </p>
+
+                        <div class="mt-auto">
+                            <a href="{% url 'film_site_app:film_detail' film.id %}" class="btn btn-outline-dark w-100">
+                                Детальніше
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="alert alert-info text-center">Фільмів поки немає.</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

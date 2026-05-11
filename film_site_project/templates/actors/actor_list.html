@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Список акторів</title>
-</head>
-<body>
-    <h1>Актори</h1>
+{% extends 'base.html' %}
 
-    <nav>
-        <a href="{% url 'home' %}">Головна</a> |
-        <a href="{% url 'film_list' %}">Фільми</a> |
-        <a href="{% url 'profile' %}">Профіль</a>
-    </nav>
+{% block title %}Список акторів{% endblock %}
 
-    <hr>
-
+{% block content %}
+<h1>Список акторів</h1>
     {% for actor in actors %}
-        <div>
-            <h2>{{ actor.name }}</h2>
-            <a href="{% url 'actor_detail' actor.id %}">Детальніше</a>
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+            {% if actor.photo %}
+                <img src="{{ actor.photo.url }}" alt="{{ actor.name }}"
+                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 1px solid #ccc;">
+            {% else %}
+                <div style="width: 80px; height: 80px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777;">
+                    No Photo
+                </div>
+            {% endif %}
+
+            <div>
+                <h2 style="margin: 0;">{{ actor.name }} {{ actor.last_name }}</h2>
+                <a href="{% url 'film_site_app:actor_detail' actor.id %}">Детальніше</a>
+            </div>
         </div>
         <hr>
     {% empty %}
         <p>Акторів немає.</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,24 @@
+/* Ефект при наведенні на картку */
+.film-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.film-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+}
+
+/* Налаштування заголовка, щоб довгі назви не ламали картку */
+.card-title {
+    min-height: 1.2em;
+}
+
+/* Плавний перехід для картинки */
+.card-img-top {
+    transition: opacity 0.3s ease;
+}
+
+.film-card:hover .card-img-top {
+    opacity: 0.9;
+}

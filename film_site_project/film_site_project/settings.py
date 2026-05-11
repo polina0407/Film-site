@@ -116,27 +116,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'film_site_app.Profile'
+LOGIN_URL = "film_site_app:login"
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = 'static/' # це у вас вже є, 118 рядок
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-LOGIN_URL = "/login/"    # ⬅️⬅️⬅️
-
-MEDIA_URL = "/media/"   # ⬅️⬅️⬅️
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")   # ⬅️⬅️⬅️
-
-# LOGIN_REDIRECT_URL = "tasks:task-list"   # ⬅️⬅️⬅️
-LOGOUT_REDIRECT_URL = "/logout/"   # ⬅️⬅️⬅️
+LOGIN_REDIRECT_URL = "film_site_app:login"
+LOGOUT_REDIRECT_URL = "film_site_app:logout"

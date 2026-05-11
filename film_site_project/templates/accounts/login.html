@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Вхід</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Вхід</button>
+</form>
+
+<p style="margin-top: 15px;">
+    Ще не зареєстровані?
+    <a href="{% url 'film_site_app:register' %}">Зареєструватися</a>
+</p>
+{% endblock %}

@@ -9,10 +9,10 @@
     <p><strong>Дата виробництва:</strong> {{ film.production_date }}</p>
 
     {% if user.is_authenticated %}
-        <form method="post" action="{% url 'like_film' film.id %}">
+        <form method="post" action="{% url 'film_site_app:like_film' film.id %}">
             {% csrf_token %}
             <button type="submit">
-                {% if film in user.liked_films.all %}
+                {% if film in user.profile.liked_film.all %}
                     Прибрати з улюблених
                 {% else %}
                     Додати в улюблені
@@ -24,7 +24,7 @@
     <h2>Актори і ролі</h2>
     {% for role in roles %}
         <p>
-            <a href="{% url 'actor_detail' role.actor.id %}">{{ role.actor.name }}</a>
+            <a href="{% url 'film_site_app:actor_detail' role.actor.id %}">{{ role.actor.name }} {{ role.actor.last_name }}</a>
             — {{ role.role_name }}
         </p>
     {% empty %}

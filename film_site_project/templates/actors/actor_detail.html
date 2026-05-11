@@ -1,29 +1,44 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ actor.name }}</title>
-</head>
-<body>
-    <h1>{{ actor.name }}</h1>
+{% extends 'base.html' %}
 
-    <nav>
-        <a href="{% url 'home' %}">Головна</a> |
-        <a href="{% url 'film_list' %}">Фільми</a> |
-        <a href="{% url 'actor_list' %}">Актори</a> |
-        <a href="{% url 'profile' %}">Профіль</a>
-    </nav>
+{% block title %}{{ actor.name }} {{ actor.last_name }}{% endblock %}
 
-    <hr>
+{% block content %}
+    <div style="display: flex; gap: 40px; margin-top: 20px; align-items: flex-start;">
 
-    <h2>Фільми та ролі</h2>
-    {% for role in roles %}
-        <p>
-            <a href="{% url 'film_detail' role.film.id %}">{{ role.film.title }}</a>
-            — {{ role.role_name }}
-        </p>
-    {% empty %}
-        <p>Інформації про ролі немає.</p>
-    {% endfor %}
-</body>
-</html>
+        <div style="flex-shrink: 0;">
+            {% if actor.photo %}
+                <img src="{{ actor.photo.url }}" alt="{{ actor.name }}"
+                     style="width: 300px; height: 400px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+            {% else %}
+                <div style="width: 300px; height: 400px; background: #f0f0f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #999;">
+                    Фото відсутнє
+                </div>
+            {% endif %}
+        </div>
+
+        <div>
+            <h1 style="margin-top: 0;">{{ actor.name }} {{ actor.last_name }}</h1>
+            <p><strong>Країна:</strong> {{ actor.country }}</p>
+            <p><strong>Стать:</strong> {{ actor.get_gender_display }}</p>
+
+            <hr>
+
+            <h3>Фільмографія та ролі</h3>
+            <ul style="list-style: none; padding: 0;">
+                {% for role in roles %}
+                    <li style="margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 6px;">
+                        <a href="{% url 'film_site_app:film_detail' id=role.film.id %}" style="font-weight: bold; text-decoration: none; color: #007bff;">
+                            {{ role.film.title }}
+                        </a>
+                        <span style="color: #555;"> — роль: {{ role.title }}</span>
+                    </li>
+                {% empty %}
+                    <li>Інформації про ролі немає.</li>
+                {% endfor %}
+            </ul>
+
+            <br>
+            <a href="{% url 'film_site_app:actor_list' %}">← Назад до списку</a>
+        </div>
+    </div>
+{% endblock %}
