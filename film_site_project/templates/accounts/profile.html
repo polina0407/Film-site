@@ -1,34 +1,48 @@
 {% extends 'base.html' %}
 
-{% block title %}Профіль{% endblock %}
+{% block title %}Мій профіль{% endblock %}
 
 {% block content %}
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1>Профіль користувача</h1>
-        <!-- Кнопка редагування -->
-        <a href="{% url 'film_site_app:edit_profile' %}" style="padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">
-            Редагувати профіль
-        </a>
+<div class="container">
+    <div class="detail-container mb-5">
+        <div class="row align-items-center text-center text-md-start">
+            <div class="col-md-3 d-flex justify-content-center">
+                <div class="avatar-wrapper">
+                    {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="Avatar">
+                    {% else %}
+                        <div class="bg-light h-100 d-flex align-items-center justify-content-center text-muted">Немає фото</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0">
+                <h2 class="fw-bold">{{ user.username }}</h2>
+                <p class="text-muted mb-1">{{ user.email }}</p>
+                <p class="small text-secondary">Телефон: {{ user.profile.phone|default:"не вказано" }}</p>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <a href="{% url 'film_site_app:edit_profile' %}" class="btn btn-outline-primary">Редагувати профіль</a>
+            </div>
+        </div>
     </div>
 
-    <div style="margin-top: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
-        <p><strong>Ім’я користувача:</strong> {{ user.username }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-
-        {# Додамо відображення аватара, якщо він є #}
-        {% if user.profile.avatar %}
-            <p><strong>Аватар:</strong><br>
-            <img src="{{ user.profile.avatar.url }}" alt="Avatar" style="width: 100px; border-radius: 50%;">
-            </p>
-        {% endif %}
+    <h2 class="fw-bold mb-4">Улюблені фільми</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for film in liked_films %}
+            <div class="col">
+                <div class="card h-100 shadow-sm film-card">
+                    {% if film.poster %}
+                        <img src="{{ film.poster.url }}" class="card-img-top" alt="{{ film.title }}" style="height: 250px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="fw-bold text-truncate">{{ film.title }}</h6>
+                        <a href="{% url 'film_site_app:film_detail' film.id %}" class="btn btn-sm btn-dark w-100">Переглянути</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12"><p class="text-muted">У вас поки немає улюблених фільмів.</p></div>
+        {% endfor %}
     </div>
-
-    <h2>Улюблені фільми</h2>
-    {% for film in liked_films %}
-        <p>
-            <a href="{% url 'film_site_app:film_detail' id=film.id %}">{{ film.title }}</a>
-        </p>
-    {% empty %}
-        <p>Улюблених фільмів поки немає.</p>
-    {% endfor %}
+</div>
 {% endblock %}

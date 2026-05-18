@@ -3,25 +3,50 @@
 {% block title %}Список акторів{% endblock %}
 
 {% block content %}
-<h1>Список акторів</h1>
-    {% for actor in actors %}
-        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-            {% if actor.photo %}
-                <img src="{{ actor.photo.url }}" alt="{{ actor.name }}"
-                     style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 1px solid #ccc;">
-            {% else %}
-                <div style="width: 80px; height: 80px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777;">
-                    No Photo
-                </div>
-            {% endif %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">Наші актори</h1>
+        <span class="text-muted">Усього: {{ actors|length }}</span>
+    </div>
 
-            <div>
-                <h2 style="margin: 0;">{{ actor.name }} {{ actor.last_name }}</h2>
-                <a href="{% url 'film_site_app:actor_detail' actor.id %}">Детальніше</a>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        {% for actor in actors %}
+            <div class="col">
+                <div class="card h-100 shadow-sm film-card text-center p-3">
+                    <div class="avatar-wrapper mb-3">
+                        {% if actor.photo %}
+                            <img src="{{ actor.photo.url }}" alt="{{ actor.name }} {{ actor.last_name }}">
+                        {% else %}
+                            <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                <span class="text-muted small">Немає фото</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body d-flex flex-column p-0">
+                        <h5 class="card-title fw-bold mb-1">
+                            {{ actor.name }} {{ actor.last_name }}
+                        </h5>
+
+                        <p class="card-text text-muted small mb-3">
+                            {% if actor.country %}
+                                <i class="bi bi-geo-alt"></i> {{ actor.country }}
+                            {% endif %}
+                        </p>
+
+                        <div class="mt-auto">
+                            <a href="{% url 'film_site_app:actor_detail' actor.id %}" class="btn btn-outline-dark btn-sm w-100">
+                                Переглянути профіль
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <hr>
-    {% empty %}
-        <p>Акторів немає.</p>
-    {% endfor %}
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-light text-center py-5">
+                    <p class="mb-0">Список акторів наразі порожній.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

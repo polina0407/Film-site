@@ -3,31 +3,80 @@
 {% block title %}{{ film.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ film.title }}</h1>
-
-    <p><strong>Жанр:</strong> {{ film.genre }}</p>
-    <p><strong>Дата виробництва:</strong> {{ film.production_date }}</p>
-
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'film_site_app:like_film' film.id %}">
-            {% csrf_token %}
-            <button type="submit">
-                {% if film in user.profile.liked_film.all %}
-                    Прибрати з улюблених
+<div class="container">
+    <div class="detail-container">
+        <div class="row">
+            <div class="col-md-4 text-center mb-4 mb-md-0">
+                {% if film.poster %}
+                    <img src="{{ film.poster.url }}" alt="{{ film.title }}" class="detail-img img-fluid">
                 {% else %}
-                    Додати в улюблені
+                    <div class="bg-light d-flex align-items-center justify-content-center detail-img mx-auto" style="height: 500px;">
+                        <span class="text-muted">Постер відсутній</span>
+                    </div>
                 {% endif %}
-            </button>
-        </form>
-    {% endif %}
+            </div>
 
-    <h2>Актори і ролі</h2>
-    {% for role in roles %}
-        <p>
-            <a href="{% url 'film_site_app:actor_detail' role.actor.id %}">{{ role.actor.name }} {{ role.actor.last_name }}</a>
-            — {{ role.role_name }}
-        </p>
-    {% empty %}
-        <p>Інформації про ролі немає.</p>
-    {% endfor %}
+            <div class="col-md-8">
+                <div class="d-flex justify-content-between align-items-start">
+                    <h1 class="display-5 fw-bold mb-3">{{ film.title }}</h1>
+
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'film_site_app:like_film' film.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-like {% if film in user.profile.liked_film.all %}btn-danger{% else %}btn-outline-danger{% endif %}" title="Додати в улюблені">
+                                <i class="bi {% if film in user.profile.liked_film.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                                {% if film in user.profile.liked_film.all %}❤{% else %}♡{% endif %}
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <span class="info-label">Жанр</span>
+                    <span class="badge bg-primary fs-6">{{ film.genre }}</span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="info-label">Рік виходу</span>
+                    <span class="info-value">{{ film.production_date|date:"Y" }}</span>
+                </div>
+
+                {% if film.country %}
+                <div class="mb-4">
+                    <span class="info-label">Країна</span>
+                    <span class="info-value">{{ film.country }}</span>
+                </div>
+                {% endif %}
+
+                {% if film.trailer_url %}
+                <div class="mt-4">
+                    <a href="{{ film.trailer_url }}" target="_blank" class="btn btn-custom btn-primary">
+                        Дивитися трейлер
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h2 class="h3 mb-4 border-bottom pb-2">Актори та ролі</h2>
+                <div class="list-group list-group-flush">
+                    {% for role in roles %}
+                        <div class="list-group-item role-item d-flex justify-content-between align-items-center">
+                            <a href="{% url 'film_site_app:actor_detail' role.actor.id %}" class="text-decoration-none fw-bold text-dark">
+                                {{ role.actor.name }} {{ role.actor.last_name }}
+                            </a>
+                            <span class="text-muted italic">— {{ role.title }}</span>
+                        </div>
+                    {% empty %}
+                        <div class="alert alert-light text-center">
+                            Інформації про акторський склад поки немає.
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
