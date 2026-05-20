@@ -52,19 +52,22 @@ class Role(models.Model):
 
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        primary_key=True,
+    gender_choices = [
+        ("male", "Чоловік"),
+        ("female", "Жінка"),
+        ("no info", "Не бажаю вказувати")
+    ]
+
+    # ОБОВ'ЯЗКОВО додайте null=True, blank=True та default
+    gender = models.CharField(
+        max_length=20,
+        choices=gender_choices,
+        default="no info",
+        blank=True,
+        null=True
     )
-
-    gender_choices = [("male", "Чоловік"), ("female", "Жінка"), ("no info", "Не бажаю вказувати ")]
-
-    gender = models.CharField(max_length=20, choices=gender_choices)
     avatar = models.ImageField(upload_to='pofile_avatars/', blank=True)
     liked_film = models.ManyToManyField(Film, blank=True, related_name="liked_by")
     phone = models.CharField(max_length=20, blank=True)
-
-    def __str__(self):
-        return self.user.username

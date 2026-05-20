@@ -1,19 +1,70 @@
-{% extends 'base.html' %}
+{{% extends 'base.html' %}
 
-{% block title %}Головна{% endblock %}
+{% block title %}Головна — Polinima{% endblock %}
 
 {% block content %}
-    <h1>Випадкові 10 фільмів</h1>
-
-    {% for film in films %}
-        <div>
-            <h2>{{ film.title }}</h2>
-            <p>Жанр: {{ film.genre }}</p>
-            <p>Дата виробництва: {{ film.production_date }}</p>
-            <a href="{% url 'film_site_app:film_detail' film.id %}">Детальніше</a>
+    <div class="p-5 mb-5 bg-dark text-white rounded-5 shadow-lg position-relative overflow-hidden">
+        <div class="row align-items-center position-relative" style="z-index: 2;">
+            <div class="col-lg-7">
+                <h1 class="display-3 fw-bold mb-3">Відкрий світ кіно</h1>
+                <p class="lead mb-4">Досліджуй найкращі стрічки, знайомся з улюбленими акторами та створюй власну колекцію шедеврів.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="{% url 'film_site_app:film_list' %}" class="btn btn-primary btn-lg px-4 me-md-2 btn-custom">Усі фільми</a>
+                    <a href="{% url 'film_site_app:actor_list' %}" class="btn btn-outline-light btn-lg px-4">Актори</a>
+                </div>
+            </div>
         </div>
-        <hr>
-    {% empty %}
-        <p>Фільмів немає.</p>
-    {% endfor %}
+        <div class="position-absolute top-0 end-0 w-50 h-100 opacity-25 d-none d-lg-block"
+             style="background: linear-gradient(to left, #0d6efd, transparent);">
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center mb-4">
+        <h2 class="fw-bold m-0">Рекомендації для вас</h2>
+        <span class="badge bg-danger ms-3 text-uppercase">Випадкові 5</span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
+        {% for film in films %}
+            <div class="col">
+                <div class="card h-100 shadow-sm film-card border-0">
+                    <div class="position-relative">
+                        {% if film.poster %}
+                            <img src="{{ film.poster.url }}" class="card-img-top rounded-3" alt="{{ film.title }}" style="height: 300px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center rounded-3" style="height: 300px;">
+                                <small>Постер відсутній</small>
+                            </div>
+                        {% endif %}
+
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2 shadow-sm">
+                            {{ film.genre }}
+                        </span>
+                    </div>
+
+                    <div class="card-body p-3 d-flex flex-column">
+                        <h6 class="card-title fw-bold text-dark mb-1 text-truncate" title="{{ film.title }}">
+                            {{ film.title }}
+                        </h6>
+                        <p class="text-muted small mb-3">
+                            {{ film.production_date|date:"Y" }} • {{ film.country }}
+                        </p>
+
+                        <div class="mt-auto">
+                            <a href="{% url 'film_site_app:film_detail' film.id %}" class="btn btn-sm btn-outline-primary w-100 py-2 rounded-3">
+                                Дивитись
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 w-100 text-center py-5">
+                <div class="alert alert-light border shadow-sm">
+                    <h4 class="text-muted">Фільмів поки немає в базі</h4>
+                    <p>Зайдіть пізніше або додайте нові через панель адміністратора.</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -18,7 +18,7 @@ class HomeView(ListView):
     context_object_name = "films"
 
     def get_queryset(self):
-        return Film.objects.order_by('?')[:10]
+        return Film.objects.order_by('?')[:5]
 
 
 class FilmListView(ListView):

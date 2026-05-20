@@ -1,37 +1,138 @@
 {% extends 'base.html' %}
 
+{% block title %}Налаштування профілю — Polinima{% endblock %}
+
 {% block content %}
-<div class="container">
-    <h1>Налаштування акаунту</h1>
-
-    <div class="row">
-        <!-- Секція редагування даних -->
-        <div class="col-md-6">
-            <h3>Основна інформація</h3>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ u_form.as_p }}
-                {{ p_form.as_p }}
-                <button type="submit" name="update_profile" class="btn btn-primary">
-                    Зберегти зміни профілю
-                </button>
-            </form>
+<div class="container my-5">
+    <div class="d-flex align-items-center mb-5 pb-3 border-bottom">
+        <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 me-3">
+            <i class="bi bi-gear-fill fs-3"></i>
         </div>
-
-        <!-- Секція зміни пароля -->
-        <div class="col-md-6">
-            <h3>Безпека (Зміна пароля)</h3>
-            <form method="POST">
-                {% csrf_token %}
-                {{ pass_form.as_p }}
-                <button type="submit" name="change_password" class="btn btn-warning">
-                    Оновити пароль
-                </button>
-            </form>
+        <div>
+            <h2 class="fw-bold m-0 text-dark">Налаштування акаунту</h2>
+            <p class="text-muted small m-0">Оновлюйте ваші персональні дані та керуйте безпекою профілю</p>
         </div>
     </div>
 
-    <br>
-    <a href="{% url 'film_site_app:profile' %}">Назад до профілю</a>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white h-100">
+                <div class="d-flex align-items-center mb-4">
+                    <i class="bi bi-person-lines-fill text-primary fs-4 me-2"></i>
+                    <h4 class="fw-bold m-0 text-dark">Основна інформація</h4>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    {% csrf_token %}
+
+                    {% for field in u_form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold small text-secondary mb-1">
+                                {{ field.label }}
+                            </label>
+                            <input type="{{ field.field.widget.input_type }}"
+                                   name="{{ field.html_name }}"
+                                   id="{{ field.id_for_label }}"
+                                   value="{{ field.value|default_if_none:'' }}"
+                                   class="form-control rounded-3 py-2 px-3 {% if field.errors %}is-invalid{% endif %}"
+                                   required>
+                            {% if field.errors %}
+                                <div class="invalid-feedback small">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    {% for field in p_form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold small text-secondary mb-1">
+                                {{ field.label }}
+                            </label>
+
+                            {% if field.field.widget.input_type == 'file' %}
+                                <div class="input-group">
+                                    <input type="file"
+                                           name="{{ field.html_name }}"
+                                           id="{{ field.id_for_label }}"
+                                           class="form-control rounded-3 {% if field.errors %}is-invalid{% endif %}">
+                                </div>
+                            {% elif field.field.widget.choices %}
+                                <select name="{{ field.html_name }}"
+                                        id="{{ field.id_for_label }}"
+                                        class="form-select rounded-3 py-2 px-3 {% if field.errors %}is-invalid{% endif %}">
+                                    {% for choice_value, choice_label in field.field.widget.choices %}
+                                        <option value="{{ choice_value }}" {% if field.value == choice_value %}selected{% endif %}>
+                                            {{ choice_label }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="text"
+                                       name="{{ field.html_name }}"
+                                       id="{{ field.id_for_label }}"
+                                       value="{{ field.value|default_if_none:'' }}"
+                                       class="form-control rounded-3 py-2 px-3 {% if field.errors %}is-invalid{% endif %}">
+                            {% endif %}
+
+                            {% if field.errors %}
+                                <div class="invalid-feedback small">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" name="update_profile" class="btn btn-primary px-4 py-2 rounded-3 fw-bold btn-custom mt-3 shadow-sm w-100">
+                        <i class="bi bi-check2-circle me-2"></i> Зберегти зміни профілю
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white h-100 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="bi bi-shield-lock-fill text-warning fs-4 me-2"></i>
+                        <h4 class="fw-bold m-0 text-dark">Безпека (Зміна пароля)</h4>
+                    </div>
+
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in pass_form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold small text-secondary mb-1">
+                                    {{ field.label }}
+                                </label>
+                                <input type="password"
+                                       name="{{ field.html_name }}"
+                                       id="{{ field.id_for_label }}"
+                                       class="form-control rounded-3 py-2 px-3 {% if field.errors %}is-invalid{% endif %}"
+                                       required>
+
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted small" style="font-size: 0.72rem; line-height: 1.2;">
+                                        {{ field.help_text|safe }}
+                                    </div>
+                                {% endif %}
+
+                                {% if field.errors %}
+                                    <div class="invalid-feedback small mt-1">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <button type="submit" name="change_password" class="btn btn-warning text-dark px-4 py-2 rounded-3 fw-bold mt-3 shadow-sm w-100">
+                            <i class="bi bi-key-fill me-2"></i> Оновити пароль
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'film_site_app:profile' %}" class="btn btn-link text-decoration-none text-muted fw-semibold small p-0 d-inline-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i> Назад до профілю
+        </a>
+    </div>
 </div>
 {% endblock %}
